@@ -1,0 +1,61 @@
+{% extends 'index.html' %}
+{% block content %}
+<style>
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      padding: 16px;
+      text-align: center;
+      width: 20rem;
+      background-color:rgb(255, 255, 255);
+      margin-left: 10%; 
+      margin-top: 5%;
+      transition: background-color 0.5s linear;
+    }
+    .card-container {
+        display: grid;
+        padding: 1rem;
+        grid-template-columns: repeat(3, minmax(320px, 1fr));
+        grid-gap: 1rem; 
+    }
+    .card:hover {
+            background-color: rgb(201, 175, 175);
+          }
+    
+    </style>
+<h1>Burgers</h1>
+<form method='POST' action='saveorder'>
+  {% csrf_token %}
+<section class="card-container">
+{% for product in burgers %}
+<div class="card" style="width: 18rem;">
+    <img src="{{product.image.url}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <p class="card_text">{{product.name}}</p>
+      <p class="card-text">{{product.description}}</p>
+      <p class="card-text">{{product.price}} сом</p>
+    </div>
+      количество <input type="number" name="count" \>
+      <input type='hidden' value="{{product.id}}" name="product_id" >
+  </div>
+{% endfor %}
+</section>
+
+
+<h1>Drinks</h1>
+<section class="card-container" action='saveorder'>
+    {% for product in drinks %}
+    <div class="card" style="width: 18rem;">
+        <img src="{{product.image.url}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <p class="card_text">{{product.name}}</p>
+          <p class="card-text">{{product.description}}</p>
+          <p class="card-text">{{product.price}} сом</p>
+        </div>
+          количество <input type="number" name="count" \>
+          <input type='hidden' value="{{product.id}}" name="product_id" >
+      </div>
+    {% endfor %}
+    </section>
+    <input type="submit" value="в корзину">
+  </form>
+{% endblock %}
